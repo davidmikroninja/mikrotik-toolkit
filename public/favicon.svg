@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="MikroTik Edge Config Generator">
+  <rect width="64" height="64" rx="14" fill="#0f172a"/>
+  <path d="M14 22h36M14 32h36M14 42h36" stroke="#4fd1c5" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="22" cy="22" r="4" fill="#f8fafc"/>
+  <circle cx="42" cy="32" r="4" fill="#f8fafc"/>
+  <circle cx="30" cy="42" r="4" fill="#f8fafc"/>
+</svg>

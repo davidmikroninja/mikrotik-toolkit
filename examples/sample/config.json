@@ -1,0 +1,168 @@
+{
+  "schemaVersion": 1,
+  "router": {
+    "name": "test-edge",
+    "asn": "65000",
+    "routerId": "192.0.2.1",
+    "targetVersion": "7.20+"
+  },
+  "addressFamilies": {
+    "ipv4": {
+      "prefixes": [
+        "192.0.2.0/24",
+        "198.51.100.0/24"
+      ],
+      "advertiseLengths": "24",
+      "rejectLongerThan": "24"
+    },
+    "ipv6": {
+      "enabled": true,
+      "prefixes": [
+        "2001:db8::/32"
+      ],
+      "advertiseLengths": "32-48",
+      "rejectLongerThan": "48"
+    }
+  },
+  "transits": [
+    {
+      "id": "transit-a6c87349-1",
+      "name": "ipt-primary",
+      "kind": "primary",
+      "role": "customer",
+      "asn": "65001",
+      "v4": "203.0.113.1",
+      "v6": "2001:db8:ffff::1",
+      "defaultRoute": true,
+      "defaultLocalPref": "110",
+      "routesLocalPref": "130",
+      "maxPrefixesV4": "1500000",
+      "maxPrefixesV6": "300000"
+    }
+  ],
+  "peering": {
+    "ct": {
+      "routeServers": true,
+      "bilaterals": [
+        "akamai"
+      ]
+    },
+    "jb": {
+      "routeServers": true,
+      "bilaterals": [
+        "netflix"
+      ]
+    },
+    "customPeers": [
+      {
+        "id": "peer-local",
+        "name": "local-peer",
+        "fabric": "ct",
+        "asn": "65002",
+        "v4": "198.51.100.9",
+        "v6": "",
+        "localPref": "410",
+        "maxPrefixesV4": "200000",
+        "maxPrefixesV6": "100000"
+      }
+    ]
+  },
+  "rpki": {
+    "enabled": true,
+    "groups": [
+      {
+        "id": "rpki-ct",
+        "label": "NAP Africa Cape Town",
+        "groupName": "NAPCT",
+        "servers": [
+          "196.60.70.2",
+          "196.60.70.3"
+        ],
+        "port": "3323",
+        "enabled": true
+      },
+      {
+        "id": "rpki-jb",
+        "label": "NAP Africa Johannesburg",
+        "groupName": "NAPJB",
+        "servers": [
+          "196.60.9.2",
+          "196.60.9.3"
+        ],
+        "port": "3323",
+        "enabled": true
+      }
+    ],
+    "enforceOnTransits": false
+  },
+  "interfaces": {
+    "wan": [
+      "ether1"
+    ],
+    "lan": [
+      "bridge"
+    ],
+    "management": [
+      "ether2"
+    ],
+    "ospf": [],
+    "bfd": [],
+    "discovery": [
+      "bridge"
+    ]
+  },
+  "management": {
+    "ranges": [
+      "10.0.0.0/8"
+    ],
+    "sshRouter": true,
+    "winboxRouter": true,
+    "sshForwardRanges": [
+      "192.0.2.0/24"
+    ],
+    "snmpServers": [
+      "10.10.0.0/16"
+    ],
+    "dnsUpstreams": [
+      "1.1.1.1",
+      "8.8.8.8"
+    ],
+    "ntpServers": [
+      "pool.ntp.org"
+    ],
+    "allowLanDns": true,
+    "allowMikrotikUpdate": true,
+    "extraBgpAllowed": []
+  },
+  "firewall": {
+    "mode": "stateful",
+    "inputPolicy": "drop",
+    "forwardPolicy": "accept",
+    "ipv6Mode": "mirror",
+    "ndMode": "unchanged",
+    "logDrops": true,
+    "dropAmplificationPorts": true,
+    "disableServicePorts": true,
+    "icmpRateLimitMs": "100",
+    "allowDhcpServer": true,
+    "allowDhcpv6Server": true,
+    "allowVrrp": false,
+    "extraInputTcp": "",
+    "extraInputUdp": "",
+    "statelessRouterServices": [
+      "dns",
+      "ntp",
+      "mikrotik-update"
+    ]
+  },
+  "priorities": {
+    "transitDefault": "110",
+    "transitBackupDefault": "100",
+    "transitRoutes": "130",
+    "transitBackupRoutes": "120",
+    "napCt": "300",
+    "napJb": "350",
+    "blpCt": "400",
+    "blpJb": "450"
+  }
+}
